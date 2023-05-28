@@ -1,8 +1,12 @@
-// Cube dimensions
+// Generation Parameters
+include_unit = false;
+include_fastener = false;
+include_pin = false;
+unit_number = 4;
+
+// Dimensions
 cube_clearance = 0.07; //mm
 cube_size      = 18; //mm
-
-unit_number = 4;
 
 fastener_size           = 6; //mm
 fastener_clearance      = 0.05; //mm
@@ -80,11 +84,18 @@ module pin(units) {
     rod(units, pin_size_actual);
 }
 
-*translate([cube_size_actual/2, cube_size_actual/2, cube_size_actual/2])
-    unit();
 
-*translate([-cube_clearance, fastener_size_actual/2, fastener_size_actual/2])
-    fastener(unit_number);
+if (include_unit) {
+    translate([cube_size_actual/2, cube_size_actual/2, cube_size_actual/2])
+        unit();
+}
 
-*translate([-cube_clearance, pin_size_actual/2, pin_size_actual/2])
-    pin(unit_number);
+if (include_fastener) {
+    translate([-cube_clearance, fastener_size_actual/2, fastener_size_actual/2])
+        fastener(unit_number);
+}
+
+if (include_pin) {
+    translate([-cube_clearance, pin_size_actual/2, pin_size_actual/2])
+        pin(unit_number);
+}
